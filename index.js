@@ -1,6 +1,11 @@
 const { Command } = require('commander');
 const chalk = require('chalk');
-const { listContacts } = require('./contacts');
+const {
+  listContacts,
+  getContactById,
+  removeContact,
+  addContact,
+} = require('./contacts');
 
 const program = new Command();
 program
@@ -18,11 +23,22 @@ const argv = program.opts();
 function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
     case 'list':
-      listContacts().then((contacts) => console.table(contacts));
+      listContacts()
+        .then((contacts) => console.table(contacts))
+        .catch(console.error);
       break;
 
     case 'get':
-      // ... id
+      getContactById(id)
+        .then((contact) => {
+          if (contact) {
+            console.log(chalk.green('Contact found!'));
+            console.log(contact);
+          } else {
+            console.log(chalk.red('Contact not found!'));
+          }
+        })
+        .catch(console.error);
       break;
 
     case 'add':

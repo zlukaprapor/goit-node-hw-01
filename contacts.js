@@ -1,4 +1,3 @@
-// contacts.js
 const fs = require('fs/promises');
 const path = require('path');
 
@@ -15,8 +14,17 @@ function listContacts() {
   return readContacts();
 }
 
-function getContactById(contactId) {
-  // ...твой код
+async function getContactById(contactId) {
+  try {
+    const contacts = await readContacts();
+    const [result] = contacts.filter(
+      ({ id }) => JSON.stringify(id) === contactId
+    );
+
+    return result;
+  } catch (error) {
+    return console.error(error);
+  }
 }
 
 function removeContact(contactId) {
