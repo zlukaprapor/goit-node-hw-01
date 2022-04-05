@@ -42,11 +42,11 @@ function invokeAction({ action, id, name, email, phone }) {
       break;
 
     case 'add':
-      // ... name email phone
+      addContact(name, email, phone);
       break;
 
     case 'remove':
-      // ... id
+      removeContact(id);
       break;
 
     default:
